@@ -1,0 +1,122 @@
+import { useEffect, useState } from "react";
+import { FaGithub, FaInstagram, FaWhatsapp, FaLinkedin } from "react-icons/fa";
+import InteractiveParticles from "./components/InteractiveParticles";
+import fotoDylan from "./images/Foto Dylan.jpeg";
+import { HomeIcon } from "@heroicons/react/16/solid";
+
+const sections = [
+  { id: "home", label: "Home", icon: <HomeIcon className="w-6 h-6" /> },
+  { id: "contact", label: "Contact", icon: <HomeIcon className="w-6 h-6" /> },
+];
+
+const Home = () => {
+  const [activeSection, setActiveSection] = useState("home");
+  const [hoveredSection, setHoveredSection] = useState("");
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+    );
+
+    sections.forEach(({ id }) => {
+      const sectionElement = document.getElementById(id);
+      if (sectionElement) observer.observe(sectionElement);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div className="relative flex flex-col min-h-screen bg-black text-indigo-200 overflow-y-auto">
+      <InteractiveParticles />
+      <nav className="top-nav fixed top-0 w-full shadow-md z-10 py-2">
+        <ul className="flex justify-center space-x-8">
+          {sections.map(({ id, label, icon }) => (
+            <li key={id} className="flex flex-col items-center">
+              <a
+                href={`#${id}`}
+                onMouseEnter={() => setHoveredSection(id)}
+                onMouseLeave={() => setHoveredSection("")}
+                className={`flex items-center px-4 py-2 transition-all duration-300 rounded-lg ${
+                  activeSection === id ? "text-blue-500 font-bold" : "text-gray-700"
+                } ${hoveredSection === id ? "bg-indigo-500 px-6" : ""}`}
+              >
+                {icon}
+                <span className="text-sm mt-1 ml-2">
+                  {hoveredSection === "contact" && id === "contact" ? "Let's contact" : label}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      
+      <h1 className="text-4xl font-bold text-center mt-20 z-10">Web Developer</h1>
+      
+      <main className="relative flex flex-col md:flex-row items-center justify-center flex-1 p-8 z-10 gap-8">
+        <section id="home" className="w-full md:w-1/2 lg:w-2/5 bg-slate-800 p-8 rounded-lg shadow-lg">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+            <div className="w-40 h-40 md:w-60 md:h-60 overflow-hidden border-4 border-white rounded-3xl">
+              <img src={fotoDylan} alt="Foto Dylan" className="w-full h-full object-cover" />
+            </div>
+            <div className="text-center md:text-left max-w-md w-full">
+              <h2 className="text-2xl font-semibold mb-2">About me</h2>
+              <p className="text-lg text-gray-300 font-bold mt-5">
+                Oi, tudo bem? Me chamo Felipe Dylan Mar Fernandes e sou desenvolvedor web! 🚀 Trabalho com React.js há 2 anos, criando interfaces interativas e performáticas. Sou apaixonado por tecnologia e sempre estou em busca de aprender coisas novas e melhorar minhas habilidades. Bora trocar uma ideia?
+              </p>
+              <a href="#more-about" className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition">Saiba mais</a>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="w-40 border p-6 rounded-lg shadow-lg flex flex-col gap-4 font-bold">
+          <div className="flex items-center gap-4">
+            <FaGithub size={28} />
+            <a href="https://github.com/" target="_blank" className="hover:text-white">GitHub</a>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaInstagram size={28} />
+            <a href="https://instagram.com/" target="_blank" className="hover:text-white">Instagram</a>
+          </div>
+          <div className="flex items-center gap-2">
+            <FaWhatsapp size={28} />
+            <a href="https://wa.me/" target="_blank" className="hover:text-white">WhatsApp</a>
+          </div>
+          <div className="flex items-center gap-4">
+            <FaLinkedin size={28} />
+            <a href="https://linkedin.com/" target="_blank" className="hover:text-white">LinkedIn</a>
+          </div>
+        </section>
+      </main>
+
+      <section id="more-about" className="p-8 bg-gray-900 text-white rounded-lg shadow-lg mt-20 ml-24 w-[90%] h-full">
+        <div className="flex flex-col items-center">
+          <img src={fotoDylan} alt="Foto Dylan" className="w-32 h-32 border-4 border-white rounded-full object-cover" />
+          <div className="flex gap-4 mt-4">
+            <FaGithub size={28} />
+            <FaInstagram size={28} />
+            <FaWhatsapp size={28} />
+            <FaLinkedin size={28} />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+          <textarea className="p-3 w-full bg-gray-800 text-white rounded-lg" placeholder="Escreva algo..." />
+          <textarea className="p-3 w-full bg-gray-800 text-white rounded-lg" placeholder="Escreva algo..." />
+        </div>
+        <textarea className="p-3 w-full bg-gray-800 text-white rounded-lg mt-4 h-32" placeholder="Escreva mais aqui..." />
+      </section>
+
+      <footer className="relative p-4 text-center z-10">
+        <p>&copy; 2024 Your Application. All rights reserved.</p>
+      </footer>
+    </div>
+  );
+};
+
+export default Home;
