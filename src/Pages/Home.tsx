@@ -7,7 +7,7 @@ import SkillsSection from "./components/SkillsInteractions";
 
 const sections = [
   { id: "home", label: "Home", icon: <HomeIcon className="w-6 h-6" /> },
-  { id: "contact", label: "Contact", icon: <HomeIcon className="w-6 h-6" /> },
+  { id: "more-about", label: "Contact", icon: <HomeIcon className="w-6 h-6" /> },
 ];
 
 const socialLinks = [
@@ -43,21 +43,23 @@ const Home = () => {
   return (
     <div className="relative flex flex-col min-h-screen bg-black text-indigo-200 overflow-y-auto">
       <InteractiveParticles />
-      <nav className="top-nav fixed top-0 w-full shadow-md z-10 py-2">
+      <nav className="top-nav shadow-md py-2 bg-black">
         <ul className="flex justify-center space-x-8">
           {sections.map(({ id, label, icon }) => (
-            <li key={id} className="flex flex-col items-center">
+            <li key={id}>
               <a
                 href={`#${id}`}
                 onMouseEnter={() => setHoveredSection(id)}
                 onMouseLeave={() => setHoveredSection("")}
-                className={`flex items-center px-4 py-2 transition-all duration-300 rounded-lg ${activeSection === id ? "text-blue-500 font-bold" : "text-gray-700"
-                  } ${hoveredSection === id ? "bg-indigo-500 px-6" : ""}`}
+                className={`flex items-center px-4 py-2 transition-all duration-300 rounded-lg 
+            ${activeSection === id ? "text-blue-500 font-bold" : "text-gray-700"}`}
               >
-                {icon}
-                <span className="text-sm mt-1 ml-2">
-                  {hoveredSection === "contact" && id === "contact" ? "Let's contact" : label}
-                </span>
+                <div className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-indigo-500 transition">
+                  {icon}
+                  <span className="text-sm">
+                    {hoveredSection === "more-about" && id === "more-about" ? "Let's contact" : label}
+                  </span>
+                </div>
               </a>
             </li>
           ))}
@@ -91,7 +93,7 @@ const Home = () => {
           ))}
         </section>
       </main>
-      <SkillsSection/>
+      <SkillsSection />
       <section id="more-about" className="p-8 bg-gray-900 text-white rounded-lg shadow-lg mt-20 ml-24 w-[90%] h-full">
         <div className="flex flex-col items-center">
           <img src={fotoDylan} alt="Foto Dylan" className="w-32 h-32 border-4 border-white rounded-full object-cover" />
