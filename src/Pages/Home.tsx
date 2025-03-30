@@ -113,13 +113,30 @@ const Home = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-          <textarea className="p-3 w-full bg-gray-800 text-white rounded-lg" placeholder="Escreva algo..." />
-          <textarea className="p-3 w-full bg-gray-800 text-white rounded-lg" placeholder="Escreva algo..." />
+          <div>
+            <label htmlFor="project" className="block text-lg font-semibold mb-1">
+              Qual tipo de site ou projeto você precisa?
+            </label>
+            <textarea id="project" className="p-3 w-full bg-gray-800 text-white rounded-lg" placeholder="Ex: Site institucional, e-commerce..." />
+          </div>
+
+          <div>
+            <label htmlFor="features" className="block text-lg font-semibold mb-1">
+              Quais funcionalidades ou recursos são essenciais para você?
+            </label>
+            <textarea id="features" className="p-3 w-full bg-gray-800 text-white rounded-lg" placeholder="Ex: Formulários, login, pagamentos..." />
+          </div>
         </div>
-        <textarea className="p-3 w-full bg-gray-800 text-white rounded-lg mt-4 h-32" placeholder="Escreva mais aqui..." />
+
+        <div className="mt-4">
+          <label htmlFor="about-you" className="block text-lg font-semibold mb-1">
+            Pode me contar um pouco sobre você e sua empresa?
+          </label>
+          <textarea id="about-you" className="p-3 w-full bg-gray-800 text-white rounded-lg h-32" placeholder="Ex: Quem você é, o que faz..." />
+        </div>
       </section>
       <footer className="relative p-4 text-center z-10">
-        <p>&copy; 2024 Felipe Dylan Mar Fernandes. All rights reserved.</p>
+        <p>&copy; 2025 Felipe Dylan Mar Fernandes. All rights reserved.</p>
       </footer>
     </div>
   );
