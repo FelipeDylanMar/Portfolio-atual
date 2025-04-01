@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 
 dotenv.config(); 
 
@@ -25,12 +26,51 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-// Rota de exemplo
+// Modelo para armazenar solicitações de projeto
+const projectRequestSchema = new mongoose.Schema({
+  tipoProjeto: { type: String, required: true },
+  email: { type: String, required: true },
+  sobrePessoa: { type: String, required: true },
+  data: { type: Date, default: Date.now },
+});
+
+const ProjectRequest = mongoose.model('ProjectRequest', projectRequestSchema);
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+app.post('/send-project-request', async (req, res) => {
+  const { tipoProjeto, email, sobrePessoa } = req.body;
+
+  try {
+    const novaSolicitacao = new ProjectRequest({ tipoProjeto, email, sobrePessoa });
+    await novaSolicitacao.save();
+
+    const mailOptions = {
+      from: email,
+      to: process.env.EMAIL_USER,
+      subject: "Nova Solicitação de Projeto",
+      text: `Tipo de Projeto: ${tipoProjeto}\nEmail: ${email}\nSobre a Pessoa: ${sobrePessoa}`,
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: "Solicitação salva e e-mail enviado com sucesso!" });
+
+  } catch (error) {
+    console.error("Erro ao processar solicitação:", error);
+    res.status(500).json({ message: "Erro ao processar solicitação.", error });
+  }
+});
+
 app.get('/', (req, res) => {
   res.send('Backend is running!');
 });
 
-// Rota de SignUp (Cadastro de Usuário)
 app.post('/signup', async (req, res) => {
   const { email, password } = req.body;
 
