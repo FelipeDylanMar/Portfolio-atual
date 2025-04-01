@@ -8,7 +8,7 @@ const resources = {
             "contact": "Contact",
             "webDeveloper": "Web Developer",
             "aboutMe": "About me",
-            "selectLanguage": "Select language",
+            "selectLanguage": "Select a language",
             "introText": "Hi, how are you? My name is Felipe Dylan Mar Fernandes, and I’m a web developer! 🚀 I’ve been working with React.js for 2 years, creating interactive and high-performance interfaces. I'm passionate about technology and always looking to learn new things and improve my skills. Let’s chat?",
             "learnMore": "Learn more about me",
             "letsContact": "Lets Contact",
