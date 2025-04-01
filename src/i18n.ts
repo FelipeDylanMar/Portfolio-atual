@@ -6,6 +6,8 @@ const resources = {
         translation: {
             "home": "Home",
             "contact": "Contact",
+            "interest": "Interested in my services? Leave your email or phone number!",
+            "interestPlaceholder": "Ex: Enter your email or phone number",
             "webDeveloper": "Web Developer",
             "aboutMe": "About me",
             "selectLanguage": "Select a language",
@@ -56,6 +58,8 @@ const resources = {
         translation: {
             "home": "Início",
             "contact": "Contato",
+            "interest": "Gostaria de saber mais sobre os meus serviços? Deixe seu e-mail ou número de telefone!",
+            "interestPlaceholder": "Ex: Digite seu e-mail ou número de telefone",
             "webDeveloper": "Desenvolvedor Web",
             "aboutMe": "Sobre mim",
             "selectLanguage": "Selecione um idioma",

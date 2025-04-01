@@ -49,6 +49,7 @@ const Home = () => {
     });
 
     return () => observer.disconnect();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -152,14 +153,14 @@ const Home = () => {
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-lg font-semibold mb-1">{t("features")}</label>
+            <label htmlFor="email" className="block text-lg font-semibold mb-1">{t("interest")}</label>
             <textarea
               id="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               className="p-3 w-full bg-gray-800 text-white rounded-lg"
-              placeholder={t("featuresPlaceholder")}
+              placeholder={t("interestPlaceholder")}
             />
           </div>
         </div>
