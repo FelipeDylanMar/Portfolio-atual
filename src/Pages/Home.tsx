@@ -7,9 +7,6 @@ import SkillsSection from "./components/SkillsInteractions";
 import { useTranslation } from "react-i18next";
 import LanguageDropdown from "./components/LanguageDropdown";
 
-
-
-
 const socialLinks = [
   { icon: <FaGithub size={28} />, href: "https://github.com/FelipeDylanMar?tab=repositories", label: "github" },
   { icon: <FaInstagram size={28} />, href: "https://www.instagram.com/priv.dylanxz/", label: "instagram" },
@@ -22,12 +19,18 @@ const Home = () => {
   const [hoveredSection, setHoveredSection] = useState("");
   const { t } = useTranslation();
 
+  const [formData, setFormData] = useState({
+    projeto: "",
+    email: "",
+    sobreVoce: "",
+  });
+
+  const [status, setStatus] = useState("");
+
   const sections = [
     { id: "home", label: t("home"), icon: <HomeIcon className="w-6 h-6" /> },
     { id: "more-about", label: t("contact"), icon: <HomeIcon className="w-6 h-6" /> },
   ];
-
-
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -48,8 +51,33 @@ const Home = () => {
     return () => observer.disconnect();
   }, []);
 
-  const handleSave = () => {
-    console.log("Enviando dados...");
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSave = async () => {
+    setStatus("Enviando...");
+  
+    try {
+      const response = await fetch("http://localhost:5000/send-project-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tipoProjeto: formData.projeto, // Ajuste para o nome correto do campo
+          email: formData.email,          // Se estiver coletando o email
+          sobreVoce: formData.sobreVoce, // Ajuste para o nome correto do campo
+        }),
+      });
+      if (response.ok) {
+        setStatus("E-mail enviado com sucesso!");
+        setFormData({ projeto: "", email: "", sobreVoce: "" });
+      } else {
+        setStatus("Erro ao enviar o e-mail.");
+      }
+    } catch (error) {
+      console.error("Erro ao conectar com o servidor:", error);
+      setStatus("Erro ao conectar ao servidor.");
+    }
   };
 
   return (
@@ -87,23 +115,9 @@ const Home = () => {
             </div>
             <div className="text-center md:text-left max-w-md w-full">
               <h2 className="text-2xl font-semibold">{t("aboutMe")}</h2>
-              <p className="text-lg text-gray-300 font-bold mt-2">
-                {t("introText")}
-              </p>
-              <div className="flex gap-5">
-                <a href="https://www.linkedin.com/in/felipe-dylan-0b306b228/" target="_blank" className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition">{t("learnMore")}</a>
-                <a href="#more-about" className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition">{t("letsContact")}</a>
-              </div>
+              <p className="text-lg text-gray-300 font-bold mt-2">{t("introText")}</p>
             </div>
           </div>
-        </section>
-        <section id="contact" className="w-40 border p-6 rounded-lg shadow-lg flex flex-col gap-4 font-bold">
-          {socialLinks.map(({ icon, href, label }) => (
-            <div key={href} className="flex items-center gap-2">
-              {icon}
-              <a href={href} target="_blank" rel="noopener noreferrer" className="hover:text-white">{t(label)}</a>
-            </div>
-          ))}
         </section>
       </main>
       <SkillsSection />
@@ -127,29 +141,45 @@ const Home = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
           <div>
-            <label htmlFor="project" className="block text-lg font-semibold mb-1">
-              {t("projectType")}
-            </label>
-            <textarea id="project" className="p-3 w-full bg-gray-800 text-white rounded-lg" placeholder={t("projectPlaceholder")} />
+            <label htmlFor="projeto" className="block text-lg font-semibold mb-1">{t("projectType")}</label>
+            <textarea
+              id="projeto"
+              name="projeto"
+              value={formData.projeto}
+              onChange={handleChange}
+              className="p-3 w-full bg-gray-800 text-white rounded-lg"
+              placeholder={t("projectPlaceholder")}
+            />
           </div>
           <div>
-            <label htmlFor="features" className="block text-lg font-semibold mb-1">
-              {t("features")}
-            </label>
-            <textarea id="features" className="p-3 w-full bg-gray-800 text-white rounded-lg" placeholder={t("featuresPlaceholder")} />
+            <label htmlFor="email" className="block text-lg font-semibold mb-1">{t("features")}</label>
+            <textarea
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="p-3 w-full bg-gray-800 text-white rounded-lg"
+              placeholder={t("featuresPlaceholder")}
+            />
           </div>
         </div>
         <div className="mt-4">
-          <label htmlFor="about-you" className="block text-lg font-semibold mb-1">
-            {t("aboutYou")}
-          </label>
-          <textarea id="about-you" className="p-3 w-full bg-gray-800 text-white rounded-lg h-32" placeholder={t("aboutYouPlaceholder")} />
+          <label htmlFor="sobreVoce" className="block text-lg font-semibold mb-1">{t("aboutYou")}</label>
+          <textarea
+            id="sobreVoce"
+            name="sobreVoce"
+            value={formData.sobreVoce}
+            onChange={handleChange}
+            className="p-3 w-full bg-gray-800 text-white rounded-lg h-32"
+            placeholder={t("aboutYouPlaceholder")}
+          />
           <button
             onClick={handleSave}
-            className=" flex mt-2 bottom-4 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition"
+            className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition"
           >
             {t("send")}
           </button>
+          {status && <p className="mt-2 text-lg">{status}</p>}
         </div>
       </section>
       <footer className="relative p-4 text-center z-10">

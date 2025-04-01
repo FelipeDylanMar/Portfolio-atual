@@ -30,7 +30,7 @@ const User = mongoose.model('User', userSchema);
 const projectRequestSchema = new mongoose.Schema({
   tipoProjeto: { type: String, required: true },
   email: { type: String, required: true },
-  sobrePessoa: { type: String, required: true },
+  sobreVoce: { type: String, required: true },
   data: { type: Date, default: Date.now },
 });
 
@@ -45,17 +45,17 @@ const transporter = nodemailer.createTransport({
 });
 
 app.post('/send-project-request', async (req, res) => {
-  const { tipoProjeto, email, sobrePessoa } = req.body;
+  const { tipoProjeto, email, sobreVoce } = req.body;
 
   try {
-    const novaSolicitacao = new ProjectRequest({ tipoProjeto, email, sobrePessoa });
+    const novaSolicitacao = new ProjectRequest({ tipoProjeto, email, sobreVoce });
     await novaSolicitacao.save();
 
     const mailOptions = {
       from: email,
       to: process.env.EMAIL_USER,
       subject: "Nova Solicitação de Projeto",
-      text: `Tipo de Projeto: ${tipoProjeto}\nEmail: ${email}\nSobre a Pessoa: ${sobrePessoa}`,
+      text: `Tipo de Projeto: ${tipoProjeto}\nEmail: ${email}\nSobre a Pessoa: ${sobreVoce}`,
     };
 
     await transporter.sendMail(mailOptions);
