@@ -4,22 +4,30 @@ import InteractiveParticles from "./components/InteractiveParticles";
 import fotoDylan from "./images/Foto Dylan.jpeg";
 import { HomeIcon } from "@heroicons/react/16/solid";
 import SkillsSection from "./components/SkillsInteractions";
+import { useTranslation } from "react-i18next";
+import LanguageDropdown from "./components/LanguageDropdown";
 
-const sections = [
-  { id: "home", label: "Home", icon: <HomeIcon className="w-6 h-6" /> },
-  { id: "more-about", label: "Contact", icon: <HomeIcon className="w-6 h-6" /> },
-];
+
+
 
 const socialLinks = [
-  { icon: <FaGithub size={28} />, href: "https://github.com/FelipeDylanMar?tab=repositories", label: "GitHub" },
-  { icon: <FaInstagram size={28} />, href: "https://www.instagram.com/priv.dylanxz/", label: "Instagram" },
-  { icon: <FaWhatsapp size={28} />, href: "https://wa.me/5592994845459?text=Olá%20Felipe,%20quero%20saber%20mais%20sobre%20seu%20trabalho!", label: "WhatsApp" },
-  { icon: <FaLinkedin size={28} />, href: "https://www.linkedin.com/in/felipe-dylan-0b306b228/", label: "LinkedIn" },
+  { icon: <FaGithub size={28} />, href: "https://github.com/FelipeDylanMar?tab=repositories", label: "github" },
+  { icon: <FaInstagram size={28} />, href: "https://www.instagram.com/priv.dylanxz/", label: "instagram" },
+  { icon: <FaWhatsapp size={28} />, href: "https://wa.me/5592994845459?text=Olá%20Felipe,%20quero%20saber%20mais%20sobre%20seu%20trabalho!", label: "whatsapp" },
+  { icon: <FaLinkedin size={28} />, href: "https://www.linkedin.com/in/felipe-dylan-0b306b228/", label: "linkedin" },
 ];
 
 const Home = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [hoveredSection, setHoveredSection] = useState("");
+  const { t } = useTranslation();
+
+  const sections = [
+    { id: "home", label: t("home"), icon: <HomeIcon className="w-6 h-6" /> },
+    { id: "more-about", label: t("contact"), icon: <HomeIcon className="w-6 h-6" /> },
+  ];
+
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -61,15 +69,16 @@ const Home = () => {
                 <div className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-indigo-500 transition">
                   {icon}
                   <span className="text-sm">
-                    {hoveredSection === "more-about" && id === "more-about" ? "Let's contact" : label}
+                    {hoveredSection === "more-about" && id === "more-about" ? t("letsContact") : t(label)}
                   </span>
                 </div>
               </a>
             </li>
           ))}
+          <LanguageDropdown />
         </ul>
       </nav>
-      <h1 className="text-4xl font-bold text-center mt-20 z-10">Web Developer</h1>
+      <h1 className="text-4xl font-bold text-center mt-20 z-10">{t("webDeveloper")}</h1>
       <main className="relative flex md:flex-row items-center justify-center flex-1 p-8 z-10 gap-8">
         <section id="home" className="w-full md:w-1/2 lg:w-2/5 bg-slate-800 p-8 rounded-lg shadow-lg">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
@@ -77,13 +86,13 @@ const Home = () => {
               <img src={fotoDylan} alt="Foto Dylan" className="w-full h-full object-cover" />
             </div>
             <div className="text-center md:text-left max-w-md w-full">
-              <h2 className="text-2xl font-semibold">About me</h2>
+              <h2 className="text-2xl font-semibold">{t("aboutMe")}</h2>
               <p className="text-lg text-gray-300 font-bold mt-2">
-                Hi, how are you? My name is Felipe Dylan Mar Fernandes, and I’m a web developer! 🚀 I’ve been working with React.js for 2 years, creating interactive and high-performance interfaces. I'm passionate about technology and always looking to learn new things and improve my skills. Let’s chat?
+                {t("introText")}
               </p>
               <div className="flex gap-5">
-                <a href="https://www.linkedin.com/in/felipe-dylan-0b306b228/" target="_blank" className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition">Learn more about me</a>
-                <a href="#more-about" className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition">Lets Contact</a>
+                <a href="https://www.linkedin.com/in/felipe-dylan-0b306b228/" target="_blank" className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition">{t("learnMore")}</a>
+                <a href="#more-about" className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition">{t("letsContact")}</a>
               </div>
             </div>
           </div>
@@ -92,7 +101,7 @@ const Home = () => {
           {socialLinks.map(({ icon, href, label }) => (
             <div key={href} className="flex items-center gap-2">
               {icon}
-              <a href={href} target="_blank" rel="noopener noreferrer" className="hover:text-white">{label}</a>
+              <a href={href} target="_blank" rel="noopener noreferrer" className="hover:text-white">{t(label)}</a>
             </div>
           ))}
         </section>
@@ -119,32 +128,32 @@ const Home = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
           <div>
             <label htmlFor="project" className="block text-lg font-semibold mb-1">
-              What type of website or project do you need
+              {t("projectType")}
             </label>
-            <textarea id="project" className="p-3 w-full bg-gray-800 text-white rounded-lg" placeholder="Ex: Site institucional, e-commerce..." />
+            <textarea id="project" className="p-3 w-full bg-gray-800 text-white rounded-lg" placeholder={t("projectPlaceholder")} />
           </div>
           <div>
             <label htmlFor="features" className="block text-lg font-semibold mb-1">
-              What features or functionalities are essential for you?
+              {t("features")}
             </label>
-            <textarea id="features" className="p-3 w-full bg-gray-800 text-white rounded-lg" placeholder="Ex: Forms, login, payments..." />
+            <textarea id="features" className="p-3 w-full bg-gray-800 text-white rounded-lg" placeholder={t("featuresPlaceholder")} />
           </div>
         </div>
         <div className="mt-4">
           <label htmlFor="about-you" className="block text-lg font-semibold mb-1">
-            Can you tell me a little about yourself and your company?
+            {t("aboutYou")}
           </label>
-          <textarea id="about-you" className="p-3 w-full bg-gray-800 text-white rounded-lg h-32" placeholder="Ex: Who you are, what you do..." />
+          <textarea id="about-you" className="p-3 w-full bg-gray-800 text-white rounded-lg h-32" placeholder={t("aboutYouPlaceholder")} />
           <button
             onClick={handleSave}
             className=" flex mt-2 bottom-4 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition"
           >
-            Send
+            {t("send")}
           </button>
         </div>
       </section>
       <footer className="relative p-4 text-center z-10">
-        <p>&copy; 2025 Felipe Dylan Mar Fernandes. All rights reserved.</p>
+        <p>{t("footerText")}</p>
       </footer>
     </div>
   );
