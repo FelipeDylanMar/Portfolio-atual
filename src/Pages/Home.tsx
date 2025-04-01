@@ -11,10 +11,10 @@ const sections = [
 ];
 
 const socialLinks = [
-  { icon: <FaGithub size={28} />, href: "https://github.com/", label: "GitHub" },
-  { icon: <FaInstagram size={28} />, href: "https://instagram.com/", label: "Instagram" },
-  { icon: <FaWhatsapp size={28} />, href: "https://wa.me/", label: "WhatsApp" },
-  { icon: <FaLinkedin size={28} />, href: "https://linkedin.com/", label: "LinkedIn" },
+  { icon: <FaGithub size={28} />, href: "https://github.com/FelipeDylanMar?tab=repositories", label: "GitHub" },
+  { icon: <FaInstagram size={28} />, href: "https://www.instagram.com/priv.dylanxz/", label: "Instagram" },
+  { icon: <FaWhatsapp size={28} />, href: "https://wa.me/5592994845459?text=Olá%20Felipe,%20quero%20saber%20mais%20sobre%20seu%20trabalho!", label: "WhatsApp" },
+  { icon: <FaLinkedin size={28} />, href: "https://www.linkedin.com/in/felipe-dylan-0b306b228/", label: "LinkedIn" },
 ];
 
 const Home = () => {
