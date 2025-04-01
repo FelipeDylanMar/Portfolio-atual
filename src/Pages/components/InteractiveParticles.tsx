@@ -11,20 +11,18 @@ const InteractiveParticles = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
     const particles: Particle[] = [];
 
     class Particle {
-      x: number;
-      y: number;
-      radius: number;
-      speedX: number;
-      speedY: number;
-      opacity: number;
+      x!: number;
+      y!: number;
+      radius!: number;
+      speedX!: number;
+      speedY!: number;
+      opacity!: number;
 
       constructor() {
+        if (!canvas) return;
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
         this.radius = Math.random() * 4 + 1;
@@ -34,13 +32,14 @@ const InteractiveParticles = () => {
       }
 
       update() {
+        if (!canvas) return;
+
         this.x += this.speedX;
         this.y += this.speedY;
 
         if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
         if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
 
-        // **Interação com o mouse**
         const dx = this.x - mouse.x;
         const dy = this.y - mouse.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -56,6 +55,7 @@ const InteractiveParticles = () => {
       }
 
       draw() {
+        if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(0, 255, 255, ${this.opacity})`;
@@ -64,12 +64,14 @@ const InteractiveParticles = () => {
     }
 
     function initParticles() {
+      if (!canvas) return;
       for (let i = 0; i < 100; i++) {
         particles.push(new Particle());
       }
     }
 
     function animate() {
+      if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       particles.forEach((particle) => {
@@ -86,12 +88,17 @@ const InteractiveParticles = () => {
     }
 
     function handleResize() {
+      if (!canvas) return;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
 
-    initParticles();
-    animate();
+    if (canvas) {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+      animate();
+    }
 
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("resize", handleResize);
