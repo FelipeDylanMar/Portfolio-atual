@@ -40,6 +40,10 @@ const Home = () => {
     return () => observer.disconnect();
   }, []);
 
+  const handleSave = () => {
+    console.log("Enviando dados...");
+  };
+
   return (
     <div className="relative flex flex-col min-h-screen bg-black text-indigo-200 overflow-y-auto">
       <InteractiveParticles />
@@ -73,12 +77,12 @@ const Home = () => {
               <img src={fotoDylan} alt="Foto Dylan" className="w-full h-full object-cover" />
             </div>
             <div className="text-center md:text-left max-w-md w-full">
-              <h2 className="text-2xl font-semibold mb-2">About me</h2>
-              <p className="text-lg text-gray-300 font-bold mt-5">
-                Oi, tudo bem? Me chamo Felipe Dylan Mar Fernandes e sou desenvolvedor web! 🚀 Trabalho com React.js há 2 anos, criando interfaces interativas e performáticas. Sou apaixonado por tecnologia e sempre estou em busca de aprender coisas novas e melhorar minhas habilidades. Bora trocar uma ideia?
+              <h2 className="text-2xl font-semibold">About me</h2>
+              <p className="text-lg text-gray-300 font-bold mt-2">
+                Hi, how are you? My name is Felipe Dylan Mar Fernandes, and I’m a web developer! 🚀 I’ve been working with React.js for 2 years, creating interactive and high-performance interfaces. I'm passionate about technology and always looking to learn new things and improve my skills. Let’s chat?
               </p>
               <div className="flex gap-5">
-                <a className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition">Saiba mais sobre mim</a>
+                <a href="https://www.linkedin.com/in/felipe-dylan-0b306b228/" target="_blank" className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition">Learn more about me</a>
                 <a href="#more-about" className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition">Lets Contact</a>
               </div>
             </div>
@@ -115,24 +119,28 @@ const Home = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
           <div>
             <label htmlFor="project" className="block text-lg font-semibold mb-1">
-              Qual tipo de site ou projeto você precisa?
+              What type of website or project do you need
             </label>
             <textarea id="project" className="p-3 w-full bg-gray-800 text-white rounded-lg" placeholder="Ex: Site institucional, e-commerce..." />
           </div>
-
           <div>
             <label htmlFor="features" className="block text-lg font-semibold mb-1">
-              Quais funcionalidades ou recursos são essenciais para você?
+              What features or functionalities are essential for you?
             </label>
-            <textarea id="features" className="p-3 w-full bg-gray-800 text-white rounded-lg" placeholder="Ex: Formulários, login, pagamentos..." />
+            <textarea id="features" className="p-3 w-full bg-gray-800 text-white rounded-lg" placeholder="Ex: Forms, login, payments..." />
           </div>
         </div>
-
         <div className="mt-4">
           <label htmlFor="about-you" className="block text-lg font-semibold mb-1">
-            Pode me contar um pouco sobre você e sua empresa?
+            Can you tell me a little about yourself and your company?
           </label>
-          <textarea id="about-you" className="p-3 w-full bg-gray-800 text-white rounded-lg h-32" placeholder="Ex: Quem você é, o que faz..." />
+          <textarea id="about-you" className="p-3 w-full bg-gray-800 text-white rounded-lg h-32" placeholder="Ex: Who you are, what you do..." />
+          <button
+            onClick={handleSave}
+            className=" flex mt-2 bottom-4 right-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition"
+          >
+            Send
+          </button>
         </div>
       </section>
       <footer className="relative p-4 text-center z-10">
