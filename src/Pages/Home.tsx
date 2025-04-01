@@ -140,6 +140,7 @@ const Home = () => {
             ))}
           </div>
         </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
           <div>
             <label htmlFor="projeto" className="block text-lg font-semibold mb-1">{t("projectType")}</label>
