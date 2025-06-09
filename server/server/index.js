@@ -14,7 +14,6 @@ const PORT = 5000;
 app.use(cors());
 app.use(express.json()); 
 
-// Conexão com o MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Conectado ao MongoDB"))
   .catch(err => console.error("Erro ao conectar ao MongoDB:", err));
@@ -26,7 +25,6 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-// Modelo para armazenar solicitações de projeto
 const projectRequestSchema = new mongoose.Schema({
   tipoProjeto: { type: String, required: true },
   email: { type: String, required: true },
@@ -85,7 +83,6 @@ app.post('/signup', async (req, res) => {
   }
 });
 
-// Rota de Login
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 

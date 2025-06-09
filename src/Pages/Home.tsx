@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { FaGithub, FaInstagram, FaWhatsapp, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaInstagram, FaWhatsapp, FaLinkedin, FaUniversity } from "react-icons/fa";
 import InteractiveParticles from "./components/InteractiveParticles";
 import fotoDylan from "./images/Foto Dylan.jpeg";
 import { HomeIcon } from "@heroicons/react/16/solid";
 import SkillsSection from "./components/SkillsInteractions";
 import { useTranslation } from "react-i18next";
 import LanguageDropdown from "./components/LanguageDropdown";
+import Certificates from "./components/Certificates";
 
 const socialLinks = [
   { icon: <FaGithub size={28} />, href: "https://github.com/FelipeDylanMar?tab=repositories", label: "github" },
@@ -49,7 +50,7 @@ const Home = () => {
     });
 
     return () => observer.disconnect();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -58,15 +59,15 @@ const Home = () => {
 
   const handleSave = async () => {
     setStatus("Enviando...");
-  
+
     try {
       const response = await fetch("http://localhost:5000/send-project-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          tipoProjeto: formData.projeto, // Ajuste para o nome correto do campo
-          email: formData.email,          // Se estiver coletando o email
-          sobreVoce: formData.sobreVoce, // Ajuste para o nome correto do campo
+          tipoProjeto: formData.projeto,
+          email: formData.email,
+          sobreVoce: formData.sobreVoce,
         }),
       });
       if (response.ok) {
@@ -111,17 +112,33 @@ const Home = () => {
       <main className="relative flex md:flex-row items-center justify-center flex-1 p-8 z-10 gap-8">
         <section id="home" className="w-full md:w-1/2 lg:w-2/5 bg-slate-800 p-8 rounded-lg shadow-lg">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-            <div className="w-40 h-40 md:w-60 md:h-60 overflow-hidden border-4 border-white rounded-3xl">
+            <div className="w-60 h-60 md:w-96 md:h-60 overflow-hidden border-4 border-white rounded-3xl">
               <img src={fotoDylan} alt="Foto Dylan" className="w-full h-full object-cover" />
             </div>
             <div className="text-center md:text-left max-w-md w-full">
               <h2 className="text-2xl font-semibold">{t("aboutMe")}</h2>
               <p className="text-lg text-gray-300 font-bold mt-2">{t("introText")}</p>
             </div>
+            <div className="text-center md:text-left max-w-md w-full">
+              <h2 className="text-2xl font-semibold">{t("formation")}</h2>
+              <p className="text-lg text-gray-300 font-bold mt-2">{t("currentStudy")}</p>
+              <div className="flex  items-center">
+                <a
+                  href="https://presencial.fametro.edu.br/cursos/sistemas-de-informacao/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-blue-700 hover:underline text-xl"
+                >
+                  <FaUniversity className="text-xl" />
+                  Fametro
+                </a>
+              </div>
+            </div>
           </div>
         </section>
       </main>
       <SkillsSection />
+      <Certificates />
       <section id="more-about" className="p-8 bg-gray-900 text-white rounded-lg shadow-lg mt-20 ml-24 w-[90%] h-full">
         <div className="flex flex-col items-center">
           <img src={fotoDylan} alt="Foto Dylan" className="w-32 h-32 border-4 border-white rounded-full object-cover" />
@@ -140,7 +157,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
           <div>
             <label htmlFor="projeto" className="block text-lg font-semibold mb-1">{t("projectType")}</label>

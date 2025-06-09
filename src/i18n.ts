@@ -11,7 +11,7 @@ const resources = {
             "webDeveloper": "Web Developer",
             "aboutMe": "About me",
             "selectLanguage": "Select a language",
-            "introText": "Hi, how are you? My name is Felipe Dylan Mar Fernandes, and I’m a web developer! 🚀 I’ve been working with React.js for 2 years, creating interactive and high-performance interfaces. I'm passionate about technology and always looking to learn new things and improve my skills. Let’s chat?",
+            "introText": "Hi, how are you? My name is Felipe Dylan Mar Fernandes, and I’m a web developer! I’ve been working with React.js for 2 years, creating interactive and high-performance interfaces. I'm passionate about technology and always looking to learn new things and improve my skills. Let’s chat?",
             "learnMore": "Learn more about me",
             "letsContact": "Lets Contact",
             "github": "GitHub",
@@ -50,7 +50,14 @@ const resources = {
             "postgresql": "PostgreSQL",
             "postgresqlDescription": "Powerful open-source relational database.",
             "git": "Git",
-            "gitDescription": "Distributed version control system."
+            "gitDescription": "Distributed version control system.",
+            "formation": "Education",
+            "currentStudy": "I am currently in the seventh semester of Information Systems at Fametro.",
+            "htmlCssWebProjects": "HTML & CSS for Web Projects",
+            "Certificates": "Certificates",
+            "javascriptWeb": "JavaScript for the Web",
+            "javascriptVarsFunctions": "JavaScript: Variables and Functions",
+            "viewCertificate": "View Certificate"
 
         }
     },
@@ -63,7 +70,7 @@ const resources = {
             "webDeveloper": "Desenvolvedor Web",
             "aboutMe": "Sobre mim",
             "selectLanguage": "Selecione um idioma",
-            "introText": "Oi, como você está? Meu nome é Felipe Dylan Mar Fernandes, e sou desenvolvedor web! 🚀 Trabalho com React.js há 2 anos, criando interfaces interativas e de alta performance. Sou apaixonado por tecnologia e sempre busco aprender novas coisas e melhorar minhas habilidades. Vamos conversar?",
+            "introText": "Oi, como você está? Meu nome é Felipe Dylan Mar Fernandes, e sou desenvolvedor web! Trabalho com React.js há 2 anos, criando interfaces interativas e de alta performance. Sou apaixonado por tecnologia e sempre busco aprender novas coisas e melhorar minhas habilidades. Vamos conversar?",
             "learnMore": "Saiba mais sobre mim",
             "letsContact": "Vamos Contatar",
             "github": "GitHub",
@@ -102,7 +109,14 @@ const resources = {
             "postgresql": "PostgreSQL",
             "postgresqlDescription": "Banco de dados relacional open-source poderoso.",
             "git": "Git",
-            "gitDescription": "Sistema de controle de versão distribuído."
+            "gitDescription": "Sistema de controle de versão distribuído.",
+            "formation": "Formação",
+            "Certificates": "Certificados",
+            "currentStudy": "Atualmente estou cursando o sétimo período de Sistemas de Informação na Fametro.",
+            "htmlCssWebProjects": "Formação HTML & CSS para Projetos Web",
+            "javascriptWeb": "JavaScript para Web",
+            "javascriptVarsFunctions": "JavaScript: Variáveis e Funções",
+            "viewCertificate": "Ver Certificado"
         }
     }
 };
