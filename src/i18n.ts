@@ -6,7 +6,7 @@ const resources = {
         translation: {
             "home": "Home",
             "contact": "Contact",
-            "interest": "Interested in my services? Leave your email or phone number",
+            "interest": "Interested in my services?",
             "interestPlaceholder": "Ex: Enter your email or phone number",
             "webDeveloper": "Web Developer",
             "aboutMe": "About me",
