@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { FaGithub, FaInstagram, FaWhatsapp, FaLinkedin, FaUniversity } from "react-icons/fa";
+import {
+  FaGithub,
+  FaInstagram,
+  FaWhatsapp,
+  FaLinkedin,
+  FaUniversity,
+} from "react-icons/fa";
 import InteractiveParticles from "./components/InteractiveParticles";
 import fotoDylan from "./images/Foto Dylan.jpeg";
 import { HomeIcon } from "@heroicons/react/16/solid";
@@ -9,10 +15,26 @@ import LanguageDropdown from "./components/LanguageDropdown";
 import Certificates from "./components/Certificates";
 
 const socialLinks = [
-  { icon: <FaGithub size={28} />, href: "https://github.com/FelipeDylanMar?tab=repositories", label: "github" },
-  { icon: <FaInstagram size={28} />, href: "https://www.instagram.com/priv.dylanxz/", label: "instagram" },
-  { icon: <FaWhatsapp size={28} />, href: "https://wa.me/5592994845459?text=Olá%20Felipe,%20quero%20saber%20mais%20sobre%20seu%20trabalho!", label: "whatsapp" },
-  { icon: <FaLinkedin size={28} />, href: "https://www.linkedin.com/in/felipe-dylan-0b306b228/", label: "linkedin" },
+  {
+    icon: <FaGithub size={28} />,
+    href: "https://github.com/FelipeDylanMar?tab=repositories",
+    label: "github",
+  },
+  {
+    icon: <FaInstagram size={28} />,
+    href: "https://www.instagram.com/priv.dylanxz/",
+    label: "instagram",
+  },
+  {
+    icon: <FaWhatsapp size={28} />,
+    href: "https://wa.me/5592994845459?text=Olá%20Felipe,%20quero%20saber%20mais%20sobre%20seu%20trabalho!",
+    label: "whatsapp",
+  },
+  {
+    icon: <FaLinkedin size={28} />,
+    href: "https://www.linkedin.com/in/felipe-dylan-0b306b228/",
+    label: "linkedin",
+  },
 ];
 
 const Home = () => {
@@ -30,19 +52,21 @@ const Home = () => {
 
   const sections = [
     { id: "home", label: t("home"), icon: <HomeIcon className="w-6 h-6" /> },
-    { id: "more-about", label: t("contact"), icon: <HomeIcon className="w-6 h-6" /> },
+    {
+      id: "more-about",
+      label: t("contact"),
+      icon: <HomeIcon className="w-6 h-6" />,
+    },
   ];
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-    );
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    });
 
     sections.forEach(({ id }) => {
       const sectionElement = document.getElementById(id);
@@ -61,15 +85,18 @@ const Home = () => {
     setStatus("Enviando...");
 
     try {
-      const response = await fetch("http://localhost:5000/send-project-request", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          tipoProjeto: formData.projeto,
-          email: formData.email,
-          sobreVoce: formData.sobreVoce,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/send-project-request",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            tipoProjeto: formData.projeto,
+            email: formData.email,
+            sobreVoce: formData.sobreVoce,
+          }),
+        }
+      );
       if (response.ok) {
         setStatus("E-mail enviado com sucesso!");
         setFormData({ projeto: "", email: "", sobreVoce: "" });
@@ -83,23 +110,28 @@ const Home = () => {
   };
 
   return (
-    <div className="relative flex flex-col min-h-screen bg-black text-indigo-200 overflow-y-auto">
+    <div className="relative flex flex-col min-h-screen bg-black text-indigo-200 overflow-x-hidden">
       <InteractiveParticles />
       <nav className="top-nav shadow-md py-2 bg-black">
-        <ul className="flex justify-center space-x-8">
+        <ul className="flex flex-wrap justify-center items-center gap-4 sm:gap-8">
           {sections.map(({ id, label, icon }) => (
             <li key={id}>
               <a
                 href={`#${id}`}
                 onMouseEnter={() => setHoveredSection(id)}
                 onMouseLeave={() => setHoveredSection("")}
-                className={`flex items-center px-4 py-2 transition-all duration-300 rounded-lg 
-            ${activeSection === id ? "text-blue-500 font-bold" : "text-gray-700"}`}
+                className={`flex items-center px-4 py-2 transition-all duration-300 rounded-lg ${
+                  activeSection === id
+                    ? "text-blue-500 font-bold"
+                    : "text-gray-400"
+                }`}
               >
                 <div className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-indigo-500 transition">
                   {icon}
                   <span className="text-sm">
-                    {hoveredSection === "more-about" && id === "more-about" ? t("letsContact") : t(label)}
+                    {hoveredSection === "more-about" && id === "more-about"
+                      ? t("letsContact")
+                      : t(label)}
                   </span>
                 </div>
               </a>
@@ -108,26 +140,44 @@ const Home = () => {
           <LanguageDropdown />
         </ul>
       </nav>
-      <h1 className="text-4xl font-bold text-center mt-20 z-10">{t("webDeveloper")}</h1>
-      <main className="relative flex md:flex-row items-center justify-center flex-1 p-8 z-10 gap-8">
-        <section id="home" className="w-full md:w-1/2 lg:w-2/5 bg-slate-800 p-8 rounded-lg shadow-lg">
+
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mt-12 z-10">
+        {t("webDeveloper")}
+      </h1>
+
+      <main className="relative flex flex-col md:flex-row items-center justify-center flex-1 px-4 py-8 z-10 gap-8">
+        <section
+          id="home"
+          className="w-full max-w-5xl bg-slate-800 p-6 sm:p-8 rounded-lg shadow-lg"
+        >
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-            <div className="w-60 h-60 md:w-96 md:h-60 overflow-hidden border-4 border-white rounded-3xl">
-              <img src={fotoDylan} alt="Foto Dylan" className="w-full h-full object-cover" />
+            <div className="w-48 h-48 sm:w-60 sm:h-60 md:w-70 md:h-60 overflow-hidden border-4 border-white rounded-3xl">
+              <img
+                src={fotoDylan}
+                alt="Foto Dylan"
+                className="w-full h-full object-cover max-w-full"
+              />
             </div>
             <div className="text-center md:text-left max-w-md w-full">
-              <h2 className="text-2xl font-semibold">{t("aboutMe")}</h2>
-              <p className="text-lg text-gray-300 font-bold mt-2">{t("introText")}</p>
-            </div>
-            <div className="text-center md:text-left max-w-md w-full">
-              <h2 className="text-2xl font-semibold">{t("formation")}</h2>
-              <p className="text-lg text-gray-300 font-bold mt-2">{t("currentStudy")}</p>
-              <div className="flex  items-center">
+              <h2 className="text-xl sm:text-2xl font-semibold">
+                {t("aboutMe")}
+              </h2>
+              <p className="text-base sm:text-lg text-gray-300 font-bold mt-2">
+                {t("introText")}
+              </p>
+
+              <h2 className="text-xl sm:text-2xl font-semibold mt-6">
+                {t("formation")}
+              </h2>
+              <p className="text-base sm:text-lg text-gray-300 font-bold mt-2">
+                {t("currentStudy")}
+              </p>
+              <div className="flex items-center mt-2">
                 <a
                   href="https://presencial.fametro.edu.br/cursos/sistemas-de-informacao/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-blue-700 hover:underline text-xl"
+                  className="flex items-center gap-2 text-blue-500 hover:underline text-lg"
                 >
                   <FaUniversity className="text-xl" />
                   Fametro
@@ -137,12 +187,21 @@ const Home = () => {
           </div>
         </section>
       </main>
+
       <SkillsSection />
       <Certificates />
-      <section id="more-about" className="p-8 bg-gray-900 text-white rounded-lg shadow-lg mt-20 ml-24 w-[90%] h-full">
-        <div className="flex flex-col items-center">
-          <img src={fotoDylan} alt="Foto Dylan" className="w-32 h-32 border-4 border-white rounded-full object-cover" />
-          <div className="flex gap-4 mt-4">
+
+      <section
+        id="more-about"
+        className="p-6 bg-gray-900 text-white rounded-lg shadow-lg mt-20 mx-auto w-[95%] sm:w-[90%] md:w-[80%] max-w-5xl"
+      >
+        <div className="flex flex-col items-center p-2">
+          <img
+            src={fotoDylan}
+            alt="Foto Dylan"
+            className="w-24 h-24 sm:w-32 sm:h-32 border-4 border-white rounded-full object-cover"
+          />
+          <div className="flex gap-4 mt-4 flex-wrap justify-center">
             {socialLinks.map(({ icon, href, label }) => (
               <a
                 key={href}
@@ -160,7 +219,12 @@ const Home = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
           <div>
-            <label htmlFor="projeto" className="block text-lg font-semibold mb-1">{t("projectType")}</label>
+            <label
+              htmlFor="projeto"
+              className="block text-lg font-semibold mb-1"
+            >
+              {t("projectType")}
+            </label>
             <textarea
               id="projeto"
               name="projeto"
@@ -171,7 +235,7 @@ const Home = () => {
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-lg font-semibold mb-1">{t("interest")}</label>
+            <label htmlFor="email" className="block text-lg font-semibold mb-1 whitespace-nowrap">{t("interest")}</label>
             <textarea
               id="email"
               name="email"
@@ -182,8 +246,14 @@ const Home = () => {
             />
           </div>
         </div>
+
         <div className="mt-4">
-          <label htmlFor="sobreVoce" className="block text-lg font-semibold mb-1">{t("aboutYou")}</label>
+          <label
+            htmlFor="sobreVoce"
+            className="block text-lg font-semibold mb-1"
+          >
+            {t("aboutYou")}
+          </label>
           <textarea
             id="sobreVoce"
             name="sobreVoce"
@@ -194,14 +264,15 @@ const Home = () => {
           />
           <button
             onClick={handleSave}
-            className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition"
+            className="w-full sm:w-auto mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition"
           >
             {t("send")}
           </button>
           {status && <p className="mt-2 text-lg">{status}</p>}
         </div>
       </section>
-      <footer className="relative p-4 text-center z-10">
+
+      <footer className="relative p-4 text-center z-10 mt-10">
         <p>{t("footerText")}</p>
       </footer>
     </div>

@@ -11,23 +11,20 @@ const LanguageDropdown: React.FC = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        menuRef.current && !menuRef.current.contains(event.target as Node) &&
-        buttonRef.current && !buttonRef.current.contains(event.target as Node)
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
       ) {
         setMenuOpen(false);
       }
     };
 
-    document.addEventListener("click", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const toggleMenu = () => {
-    setMenuOpen((prevState) => !prevState);
-  };
+  const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   const handleLanguageChange = (lang: string) => {
     i18n.changeLanguage(lang);
@@ -35,36 +32,33 @@ const LanguageDropdown: React.FC = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative z-50">
       <button
         ref={buttonRef}
-        className="flex items-center gap-2 px-2 py-1 mt-3 text-white bg-indigo-900 rounded-md hover:bg-indigo-800"
+        className="flex items-center gap-2 px-3 py-2 text-white bg-indigo-900 rounded-md hover:bg-indigo-800 transition"
         onClick={toggleMenu}
       >
         <GlobeAltIcon className="w-5 h-5" />
-        <span>{t('selectLanguage')}</span>
+        <span>{t("selectLanguage")}</span>
       </button>
 
       {isMenuOpen && (
         <div
           ref={menuRef}
-          className="absolute right-0 top-12 font-bold p-4 rounded-md shadow-lg transition-all duration-300"
+          className="absolute right-0 mt-2 w-32 bg-indigo-900 text-white rounded-lg shadow-lg z-50"
         >
-            <div className="border rounded">
-            <button
+          <button
             onClick={() => handleLanguageChange("en")}
-            className="block text-white py-2 px-4 hover:bg-indigo-800 w-full text-left"
+            className="w-full text-left px-4 py-2 hover:bg-indigo-800 rounded-t"
           >
-            en-US
+            English
           </button>
           <button
             onClick={() => handleLanguageChange("pt")}
-            className="block text-white py-2 px-4 hover:bg-indigo-800 w-full text-left"
+            className="w-full text-left px-4 py-2 hover:bg-indigo-800 rounded-b"
           >
-            pt-BR
+            Português
           </button>
-            </div>
-          
         </div>
       )}
     </div>

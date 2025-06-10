@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import formationcss from '../images/htmlcss.jpg'
 import jsforweb from '../images/JavaScript para Web.jpg'
 import jsvandf from '../images/JS Variables and functions.jpg'
+import tsPOO from '../images/tsPOO.jpg'
+import reactTS from '../images/reactTS.jpg'
 
 const Certificates = () => {
   const { t } = useTranslation();
@@ -25,6 +27,18 @@ const Certificates = () => {
     provider: "Alura",
     image: jsvandf,
     link: "https://cursos.alura.com.br/user/felipe-back98/course/fundamentos-javascript-tipos-variaveis-funcoes/certificate"
+  },
+  {
+    title: t('tsPOO'),
+    provider: "DIO",
+    image: tsPOO,
+    link: "https://hermes.dio.me/certificates/C953F973.pdf"
+  },
+  {
+    title: t('reactTs'),
+    provider: "DIO",
+    image: reactTS,
+    link: "https://hermes.dio.me/certificates/A75436ED.pdf"
   },
 ];
 

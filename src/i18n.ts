@@ -6,7 +6,7 @@ const resources = {
         translation: {
             "home": "Home",
             "contact": "Contact",
-            "interest": "Interested in my services? Leave your email or phone number!",
+            "interest": "Interested in my services? Leave your email or phone number",
             "interestPlaceholder": "Ex: Enter your email or phone number",
             "webDeveloper": "Web Developer",
             "aboutMe": "About me",
@@ -57,15 +57,16 @@ const resources = {
             "Certificates": "Certificates",
             "javascriptWeb": "JavaScript for the Web",
             "javascriptVarsFunctions": "JavaScript: Variables and Functions",
-            "viewCertificate": "View Certificate"
-
+            "viewCertificate": "View Certificate",
+            "tsPOO": "Object oriented programation with TypeScript",
+            "reactTs": "Introduction on React with TypeScript"
         }
     },
     pt: {
         translation: {
             "home": "Início",
             "contact": "Contato",
-            "interest": "Gostaria de saber mais sobre os meus serviços? Deixe seu e-mail ou número de telefone!",
+            "interest": "Gostaria de saber mais sobre os meus serviços?",
             "interestPlaceholder": "Ex: Digite seu e-mail ou número de telefone",
             "webDeveloper": "Desenvolvedor Web",
             "aboutMe": "Sobre mim",
@@ -77,7 +78,7 @@ const resources = {
             "instagram": "Instagram",
             "whatsapp": "WhatsApp",
             "linkedin": "LinkedIn",
-            "projectType": "Que tipo de site ou projeto você precisa",
+            "projectType": "Que tipo de site ou projeto você precisa?",
             "features": "Quais funcionalidades ou recursos são essenciais para você?",
             "aboutYou": "Pode me contar um pouco sobre você e sua empresa?",
             "send": "Enviar",
@@ -116,7 +117,9 @@ const resources = {
             "htmlCssWebProjects": "Formação HTML & CSS para Projetos Web",
             "javascriptWeb": "JavaScript para Web",
             "javascriptVarsFunctions": "JavaScript: Variáveis e Funções",
-            "viewCertificate": "Ver Certificado"
+            "viewCertificate": "Ver Certificado",
+            "tsPOO": "Programação orientada a Objetos com TypeScript",
+            "reactTs": "Introdução ao React com Typescript"
         }
     }
 };
