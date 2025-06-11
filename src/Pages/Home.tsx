@@ -86,7 +86,7 @@ const Home = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/send-project-request",
+        "https://portfolio-backend-xf3m.onrender.com/send-project-request",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -97,6 +97,7 @@ const Home = () => {
           }),
         }
       );
+
       if (response.ok) {
         setStatus("E-mail enviado com sucesso!");
         setFormData({ projeto: "", email: "", sobreVoce: "" });
@@ -235,7 +236,12 @@ const Home = () => {
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-lg font-semibold mb-1 whitespace-nowrap">{t("interest")}</label>
+            <label
+              htmlFor="email"
+              className="block text-lg font-semibold mb-1 whitespace-nowrap"
+            >
+              {t("interest")}
+            </label>
             <textarea
               id="email"
               name="email"
