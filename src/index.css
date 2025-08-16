@@ -10,3 +10,26 @@ html, body {
 #root {
   @apply h-full w-full;
 }
+
+/* Otimizações de performance para scroll suave */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Acelerar animações com GPU */
+.transition, .transition-colors, .transition-all {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Otimizar canvas para melhor performance */
+canvas {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Melhorar performance de hover */
+button, a {
+  will-change: transform, background-color, color;
+  transform: translateZ(0);
+}

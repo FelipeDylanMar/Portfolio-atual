@@ -14,6 +14,8 @@ const resources = {
             "introText": "Hi, how are you? My name is Felipe Dylan Mar Fernandes, and I’m a web developer! I’ve been working with React.js for 2 years, creating interactive and high-performance interfaces. I'm passionate about technology and always looking to learn new things and improve my skills. Let’s chat?",
             "learnMore": "Learn more about me",
             "letsContact": "Lets Contact",
+            "letsConnect": "Let's Connect",
+            "getInTouch": "Get In Touch",
             "github": "GitHub",
             "instagram": "Instagram",
             "whatsapp": "WhatsApp",
@@ -74,6 +76,8 @@ const resources = {
             "introText": "Oi, como você está? Meu nome é Felipe Dylan Mar Fernandes, e sou desenvolvedor web! Trabalho com React.js há 2 anos, criando interfaces interativas e de alta performance. Sou apaixonado por tecnologia e sempre busco aprender novas coisas e melhorar minhas habilidades. Vamos conversar?",
             "learnMore": "Saiba mais sobre mim",
             "letsContact": "Vamos Contatar",
+            "letsConnect": "Vamos nos Conectar",
+            "getInTouch": "Entre em Contato",
             "github": "GitHub",
             "instagram": "Instagram",
             "whatsapp": "WhatsApp",
@@ -129,8 +133,18 @@ i18n
     .init({
         resources,
         lng: 'en',
+        fallbackLng: 'en',
+        debug: false,
         interpolation: {
             escapeValue: false
+        },
+        react: {
+            useSuspense: false,
+            bindI18n: 'languageChanged loaded',
+            bindI18nStore: 'added removed',
+            transEmptyNodeValue: '',
+            transSupportBasicHtmlNodes: true,
+            transKeepBasicHtmlNodesFor: ['br', 'strong', 'i']
         }
     });
 

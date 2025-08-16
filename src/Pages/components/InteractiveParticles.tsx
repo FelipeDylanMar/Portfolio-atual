@@ -1,8 +1,28 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 
 const InteractiveParticles = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const mouse = { x: 0, y: 0 };
+  const animationRef = useRef<number>();
+  const mouse = useRef({ x: 0, y: 0 });
+  const lastTime = useRef(0);
+  const mouseThrottle = useRef(0);
+
+  const handleMouseMove = useCallback((event: MouseEvent) => {
+    // Throttle mouse events para melhor performance
+    const now = Date.now();
+    if (now - mouseThrottle.current < 16) return; // ~60fps
+    mouseThrottle.current = now;
+    
+    mouse.current.x = event.clientX;
+    mouse.current.y = event.clientY;
+  }, []);
+
+  const handleResize = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -20,15 +40,21 @@ const InteractiveParticles = () => {
       speedX!: number;
       speedY!: number;
       opacity!: number;
+      baseOpacity!: number;
 
       constructor() {
+        this.reset();
+      }
+
+      reset() {
         if (!canvas) return;
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.radius = Math.random() * 4 + 1;
-        this.speedX = Math.random() * 2 - 1;
-        this.speedY = Math.random() * 2 - 1;
-        this.opacity = Math.random();
+        this.radius = Math.random() * 3 + 1; // Reduzido de 4 para 3
+        this.speedX = (Math.random() - 0.5) * 1.5; // Reduzido velocidade
+        this.speedY = (Math.random() - 0.5) * 1.5;
+        this.baseOpacity = Math.random() * 0.5 + 0.3;
+        this.opacity = this.baseOpacity;
       }
 
       update() {
@@ -37,77 +63,92 @@ const InteractiveParticles = () => {
         this.x += this.speedX;
         this.y += this.speedY;
 
-        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        // Otimização: usar operador ternário em vez de if
+        this.speedX = (this.x < 0 || this.x > canvas.width) ? -this.speedX : this.speedX;
+        this.speedY = (this.y < 0 || this.y > canvas.height) ? -this.speedY : this.speedY;
 
-        const dx = this.x - mouse.x;
-        const dy = this.y - mouse.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+        // Otimização: usar distância quadrada para evitar Math.sqrt
+        const dx = this.x - mouse.current.x;
+        const dy = this.y - mouse.current.y;
+        const distanceSquared = dx * dx + dy * dy;
+        const interactionRadius = 10000; // 100^2
 
-        if (distance < 100) {
-          const angle = Math.atan2(dy, dx);
-          this.x += Math.cos(angle) * 2;
-          this.y += Math.sin(angle) * 2;
-          this.opacity = 1;
+        if (distanceSquared < interactionRadius) {
+          const distance = Math.sqrt(distanceSquared);
+          const force = (100 - distance) / 100;
+          this.x += (dx / distance) * force * 1.5;
+          this.y += (dy / distance) * force * 1.5;
+          this.opacity = Math.min(1, this.baseOpacity + force * 0.7);
         } else {
-          this.opacity = Math.max(0.3, this.opacity - 0.01);
+          this.opacity = Math.max(this.baseOpacity, this.opacity - 0.02);
         }
       }
 
       draw() {
-        if (!ctx) return;
+        if (!ctx || this.opacity < 0.1) return;
+        ctx.globalAlpha = this.opacity;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 255, 255, ${this.opacity})`;
+        ctx.fillStyle = '#00ffff';
         ctx.fill();
       }
     }
 
     function initParticles() {
       if (!canvas) return;
-      for (let i = 0; i < 100; i++) {
+      // Reduzido para 30 partículas para melhor performance
+      const particleCount = Math.min(30, Math.floor((canvas.width * canvas.height) / 25000));
+      particles.length = 0; // Limpar array
+      for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle());
       }
     }
 
-    function animate() {
+    function animate(currentTime: number) {
       if (!ctx || !canvas) return;
+      
+      // Limitar FPS para 60fps
+      if (currentTime - lastTime.current < 16.67) {
+        animationRef.current = requestAnimationFrame(animate);
+        return;
+      }
+      lastTime.current = currentTime;
+      
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.globalAlpha = 1;
 
-      particles.forEach((particle) => {
-        particle.update();
-        particle.draw();
-      });
+      // Otimização: usar for loop em vez de forEach
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
 
-      requestAnimationFrame(animate);
+      animationRef.current = requestAnimationFrame(animate);
     }
 
-    function handleMouseMove(event: MouseEvent) {
-      mouse.x = event.clientX;
-      mouse.y = event.clientY;
-    }
-
-    function handleResize() {
-      if (!canvas) return;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
+    const handleResizeInternal = () => {
+      handleResize();
+      initParticles();
+    };
 
     if (canvas) {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       initParticles();
-      animate();
+      animationRef.current = requestAnimationFrame(animate);
     }
 
     window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResizeInternal);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", handleResizeInternal);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
     };
-  }, []);
+  }, [handleMouseMove, handleResize]);
 
   return (
     <canvas

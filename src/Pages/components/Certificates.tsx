@@ -45,28 +45,28 @@ const Certificates = () => {
   return (
     <section
       id="certificates"
-      className="p-8 bg-gray-900 text-white rounded-lg shadow-lg mt-20 w-[90%] mx-auto"
+      className="p-8 bg-light-100/80 dark:bg-dark-950/80 backdrop-blur-sm text-dark-900 dark:text-white rounded-lg shadow-lg mt-20 w-[90%] mx-auto"
     >
       <div className="flex flex-col items-center">
-        <h2 className="text-2xl font-bold mb-8">{t("Certificates")}</h2>
+        <h2 className="text-2xl font-bold mb-8 text-primary-600 dark:text-primary-400">{t("Certificates")}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
           {certificates.map((cert) => (
             <div
               key={cert.title}
-              className="bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-xl transition duration-300"
+              className="bg-light-200/80 dark:bg-dark-900/80 backdrop-blur-sm rounded-lg p-4 shadow-md hover:shadow-xl transition duration-300 border border-light-300 dark:border-dark-700"
             >
               <img
                 src={cert.image}
                 alt={cert.title}
                 className="h-60 object-contain mx-auto mb-4"
               />
-              <h3 className="text-xl font-semibold text-center">{cert.title}</h3>
-              <p className="text-x1 text-gray-400 text-center">{cert.provider}</p>
+              <h3 className="text-xl font-semibold text-center text-dark-900 dark:text-white">{cert.title}</h3>
+              <p className="text-x1 text-dark-600 dark:text-gray-400 text-center">{cert.provider}</p>
               <a
                 href={cert.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block mt-4 text-center text-blue-400 hover:underline"
+                className="block mt-4 text-center text-primary-600 dark:text-primary-400 hover:underline"
               >
                 {t("viewCertificate")}
               </a>

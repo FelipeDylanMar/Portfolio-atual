@@ -12,6 +12,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<string | null>(localStorage.getItem("user"));
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!localStorage.getItem("token"));
   const navigate = useNavigate();
 
   const login = async (email: string, password: string) => {
@@ -31,6 +32,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       localStorage.setItem("token", token);
       localStorage.setItem("user", email);
       setUser(email);
+      setIsAuthenticated(true);
   
       navigate("/home");
     } catch (error) {
@@ -45,10 +47,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
+    setIsAuthenticated(false);
     navigate("/login");
   };
-
-  const isAuthenticated = !!localStorage.getItem("token");
 
   return (
     <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>

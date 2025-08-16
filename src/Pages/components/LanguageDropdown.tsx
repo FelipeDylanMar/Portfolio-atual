@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { GlobeAltIcon } from "@heroicons/react/20/solid";
 
@@ -8,28 +8,30 @@ const LanguageDropdown: React.FC = () => {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(event.target as Node) &&
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target as Node)
-      ) {
-        setMenuOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+  const handleClickOutside = useCallback((event: MouseEvent) => {
+    if (
+      menuRef.current &&
+      !menuRef.current.contains(event.target as Node) &&
+      buttonRef.current &&
+      !buttonRef.current.contains(event.target as Node)
+    ) {
+      setMenuOpen(false);
+    }
   }, []);
 
-  const toggleMenu = () => setMenuOpen((prev) => !prev);
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [isMenuOpen, handleClickOutside]);
 
-  const handleLanguageChange = (lang: string) => {
+  const toggleMenu = useCallback(() => setMenuOpen((prev) => !prev), []);
+
+  const handleLanguageChange = useCallback((lang: string) => {
     i18n.changeLanguage(lang);
     setMenuOpen(false);
-  };
+  }, [i18n]);
 
   return (
     <div className="relative z-50">
